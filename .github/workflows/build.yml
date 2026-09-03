@@ -1,0 +1,41 @@
+name: SolaEver Explorer Build Check
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          # package.json에 적힌 10.17.1 버전을 자동으로 사용하도록 설정하여 충돌 제거
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          # 복잡한 경로 설정 없이 setup-node의 자체 캐시 기능을 사용하여 에러 방지
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        # lock 파일 버전 차이로 인한 에러를 방지하기 위해 일반 install 실행
+        run: pnpm install
+
+      - name: Build Project
+        run: pnpm build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          # 빌드 시 필요한 환경 변수만 주입 (소스 코드는 건드리지 않음)
+          NEXT_PUBLIC_MAINNET_RPC_URL: "https://rpc-sola.ever-chain.xyz"
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          NODE_OPTIONS: "--max_old_space_size=4096"
