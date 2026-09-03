@@ -1,0 +1,23 @@
+<svg width="420" height="64" viewBox="0 0 420 64" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      font-weight: 600;
+      fill: #ffffff;
+    }
+    .subtitle {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      font-weight: 400;
+      fill: #b4b4b4;
+      letter-spacing: 0.08em;
+    }
+  </style>
+
+  <text x="0" y="40" class="title" font-size="36">
+    SolaEver
+  </text>
+
+  <text x="205" y="40" class="subtitle" font-size="20">
+    Explorer
+  </text>
+</svg>
